@@ -50,7 +50,9 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Path("{id}")
     @Produces({"application/json"})
     public Users find(@PathParam("id") Integer id) {
-        return super.find(id);
+          return (Users) em.createNamedQuery("Users.findByUserName").setParameter("userName", "test").getSingleResult();
+          
+// return super.find(userName);
     }
 
     @GET
