@@ -47,11 +47,15 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     }
 
     @GET
-    @Path("{id}")
+    @Path("{email}")
     @Produces({"application/json"})
-    public Users find(@PathParam("id") Integer id) {
-          return (Users) em.createNamedQuery("Users.findByUserName").setParameter("userName", "test").getSingleResult();
-          
+    public Users find(@PathParam("email") String useremail) {
+          return (Users) em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", useremail).getSingleResult();
+    
+//    @Path("{id}")
+//    @Produces({"application/json"})
+//    public Users find(@PathParam("id") Integer id) {
+//          return (Users) em.createNamedQuery("Users.findByUserName").setParameter("userName", "test").getSingleResult();      
 // return super.find(userName);
     }
 
