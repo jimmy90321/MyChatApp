@@ -1,8 +1,10 @@
 package com.example.jimmy.mychatapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,8 +12,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class LoginActivity extends AppCompatActivity {
+import com.example.jimmy.mychatapp.common.user;
+import com.example.jimmy.mychatapp.user.getUserByEmailTask;
+import com.example.jimmy.mychatapp.user.user_main;
+import com.google.gson.Gson;
 
+public class LoginActivity extends AppCompatActivity implements DialogInterface.OnClickListener{
+
+    private TextView tv_newRegister;
+    private EditText et_email,et_pass;
+
+    //碰觸EditText以外地方收起鍵盤
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if(ev.getAction() == MotionEvent.ACTION_DOWN){
@@ -51,18 +62,47 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        getView();
 
-
-        TextView newRegister = (TextView)findViewById(R.id.tv_new_register);
-
-        newRegister.setOnClickListener(new View.OnClickListener() {
+        tv_newRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
             }
         });
-
-
     }
 
+    private void getView() {
+        tv_newRegister = (TextView)findViewById(R.id.tv_new_register);
+        et_email = (EditText)findViewById(R.id.et_email);
+        et_pass = (EditText)findViewById(R.id.et_password);
+    }
+
+    public void Login(View view) {
+        user user = new user();
+        String path = et_email.getText().toString();
+        String url = user_main.url;
+        try{
+            user = new getUserByEmailTask().execute(url,path).get();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        if(user != null){
+            String pw_login = et_pass.getText().toString();
+            String pw_confirm = user.getUserPw().toString();
+            String pw;
+            Gson gson = new Gson();
+            if(user.getUserPw().toString().equals(et_pass.getText().toString())){
+                new AlertDialog.Builder(this)
+                        .setMessage("登入成功")
+                        .setPositiveButton("確定",this)
+                        .show();
+            }
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+
+    }
 }
