@@ -12,10 +12,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.jimmy.mychatapp.common.user;
 import com.example.jimmy.mychatapp.user.getUserByEmailTask;
 import com.example.jimmy.mychatapp.user.user_main;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class LoginActivity extends AppCompatActivity implements DialogInterface.OnClickListener{
 
@@ -79,24 +79,35 @@ public class LoginActivity extends AppCompatActivity implements DialogInterface.
     }
 
     public void Login(View view) {
-        user user = new user();
+        String getResult = null;
         String path = et_email.getText().toString();
         String url = user_main.url;
         try{
-            user = new getUserByEmailTask().execute(url,path).get();
+            getResult = new getUserByEmailTask().execute(url,path).get();
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        if(user != null){
+        if(getResult != null){
             String pw_login = et_pass.getText().toString();
-            String pw_confirm = user.getUserPw().toString();
-            String pw;
-            Gson gson = new Gson();
-            if(user.getUserPw().toString().equals(et_pass.getText().toString())){
+            JsonObject jobj = new Gson().fromJson(getResult,JsonObject.class);
+            String pw_confirm = jobj.get("userPw").getAsString();
+
+            if(pw_login.equals(pw_confirm)){
                 new AlertDialog.Builder(this)
                         .setMessage("登入成功")
+                        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }
+                        })
+                        .show();
+            }else{
+                new AlertDialog.Builder(this)
+                        .setMessage("密碼錯誤，請重新輸入密碼")
                         .setPositiveButton("確定",this)
                         .show();
+                et_pass.setText("");
             }
         }
     }

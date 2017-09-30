@@ -3,10 +3,6 @@ package com.example.jimmy.mychatapp.user;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.jimmy.mychatapp.common.user;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,12 +13,12 @@ import java.net.URL;
  * Created by jimmy on 2017/9/28.
  */
 
-public class getUserByEmailTask extends AsyncTask<Object,Integer,user> {
+public class getUserByEmailTask extends AsyncTask<Object,Integer,String> {
 
     private static final String TAG = "getUserByEmailTask";
 
     @Override
-    protected user doInBackground(Object... params) {
+    protected String doInBackground(Object... params) {
         String url = params[0].toString()+params[1].toString();
         String jsonIn;
         try{
@@ -31,9 +27,7 @@ public class getUserByEmailTask extends AsyncTask<Object,Integer,user> {
             Log.d(TAG,ex.toString());
             return null;
         }
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss+08:00'").create();
-        user user = gson.fromJson(jsonIn,user.class);
-        return user;
+        return jsonIn;
     }
 
     private String getUser(String url) throws IOException{
