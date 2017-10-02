@@ -1,15 +1,15 @@
 package com.example.jimmy.mychatapp.common;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by jimmy on 2017/9/28.
  */
 
-public class user {
+public class User {
     private Integer userId;
     private String userName,userPw,userEmail;
-    private Date createdAt;
+    private Timestamp createdAt ;
 
     public Integer getUserId() {
         return userId;
@@ -43,11 +43,11 @@ public class user {
         this.userEmail = userEmail;
     }
 
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 }

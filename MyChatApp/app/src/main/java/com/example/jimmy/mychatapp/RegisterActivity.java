@@ -1,8 +1,10 @@
 package com.example.jimmy.mychatapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,10 +14,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.jimmy.mychatapp.user.createUserTask;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements DialogInterface.OnClickListener{
 
     private EditText et_email,et_pass,et_passcofirm,et_name;
     private TextView tv_readyToLogin,tv_emailhint,tv_passwordhint,tv_confirmpwhint;
@@ -157,4 +161,53 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void Register(View view) {
+        String mEmail = et_email.getText().toString();
+        String mPass = et_pass.getText().toString();
+        String mPassConfirm = et_passcofirm.getText().toString();
+        String mName = et_name.getText().toString();
+        if(mEmail.length() == 0){
+            new AlertDialog.Builder(this)
+                    .setMessage("請輸入Email")
+                    .setPositiveButton("確定",this)
+                    .show();
+        }else if(mPass.length() < 4 || mPass.length() > 12){
+            new AlertDialog.Builder(this)
+                    .setMessage("請輸入密碼")
+                    .setPositiveButton("確定",this)
+                    .show();
+        }else if(!mPassConfirm.equals(mPass)){
+            new AlertDialog.Builder(this)
+                    .setMessage("確認密碼錯誤，請重新輸入")
+                    .setPositiveButton("確定",this)
+                    .show();
+            et_passcofirm.setText("");
+        }else{
+            if(mName.length() == 0)mName = mEmail;
+            String postResult = null;
+            try{
+                postResult = new createUserTask().execute(mEmail,mPass,mName).get();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+            if(postResult != null){
+                new AlertDialog.Builder(this)
+                        .setMessage("建立帳號成功，將返回登入畫面")
+                        .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+
+    }
+
 }

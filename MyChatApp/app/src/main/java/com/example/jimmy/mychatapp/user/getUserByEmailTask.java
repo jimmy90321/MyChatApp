@@ -35,7 +35,7 @@ public class getUserByEmailTask extends AsyncTask<Object,Integer,String> {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-length","0");
-        connection.setUseCaches(false);
+        connection.setUseCaches(true);
         connection.setAllowUserInteraction(false);
 
         //set Timeout
