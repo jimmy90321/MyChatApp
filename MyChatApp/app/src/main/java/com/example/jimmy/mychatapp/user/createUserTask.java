@@ -6,7 +6,8 @@ import android.util.Log;
 import com.example.jimmy.mychatapp.common.User;
 import com.google.gson.Gson;
 
-import java.io.OutputStream;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -51,8 +52,11 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
 
-            OutputStream bw = connection.getOutputStream();
-            bw.write(jsonOut.getBytes());
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+// OutputStream bw = connection.getOutputStream();
+//            bw.write(jsonOut.getBytes());
+            bw.write(jsonOut);
+            bw.flush();
             bw.close();
             int responseCode = connection.getResponseCode();
             Log.d(TAG,String.valueOf(responseCode).toString());
