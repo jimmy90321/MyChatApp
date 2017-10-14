@@ -121,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
+                android:hint="(非必要)"
                 />
 
             <Button
@@ -130,7 +131,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:text="Register New Account"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="Register"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -65,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:inputType="textPassword"/>
 
             <Button
                 android:id="@+id/btn_login"
@@ -74,7 +75,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:text="Login"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="Login"/>
 
             <TextView
                 android:layout_width="wrap_content"
