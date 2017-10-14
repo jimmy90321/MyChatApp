@@ -41,27 +41,25 @@ public class Users implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
+    @NotNull
     @Column(name = "user_name")
     private String userName;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "user_pw")
     private String userPw;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
+    @NotNull
     @Column(name = "user_email")
     private String userEmail;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Messages> messagesCollection;
+   // @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+   // private Collection<Messages> messagesCollection;
 
     public Users() {
     }
@@ -118,14 +116,14 @@ public class Users implements Serializable {
         this.createdAt = createdAt;
     }
 
-    @XmlTransient
-    public Collection<Messages> getMessagesCollection() {
-        return messagesCollection;
-    }
+  //  @XmlTransient
+   // public Collection<Messages> getMessagesCollection() {
+      //  return messagesCollection;
+  //  }
 
-    public void setMessagesCollection(Collection<Messages> messagesCollection) {
-        this.messagesCollection = messagesCollection;
-    }
+  //  public void setMessagesCollection(Collection<Messages> messagesCollection) {
+  //      this.messagesCollection = messagesCollection;
+  //  }
 
     @Override
     public int hashCode() {

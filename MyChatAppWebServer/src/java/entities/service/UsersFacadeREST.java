@@ -30,7 +30,14 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Override
     @Consumes({"application/json"})
     public void create(Users entity) {
-        super.create(entity);
+        try
+        {
+            super.create(entity);    
+        }
+        catch(Exception ex)
+        {
+            System.out.println( "ex :" + ex.toString() ); 
+        }
     }
 
     @PUT
