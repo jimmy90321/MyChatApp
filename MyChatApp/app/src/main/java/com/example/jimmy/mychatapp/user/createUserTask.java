@@ -36,14 +36,16 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
         String jsonOut = new Gson().toJson(user);
         String jsonIn = null;
         try{
-            createUser(url,jsonOut);
+            if(createUser(url,jsonOut)){
+                jsonIn = params[0].toString();
+            }
         }catch (Exception ex){
             Log.d(TAG,ex.toString());
         }
         return jsonIn;
     }
 
-    private void createUser(String url, String jsonOut) {
+    private boolean createUser(String url, String jsonOut) {
         try{
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestProperty("Content-type", "Application/json");
@@ -60,9 +62,13 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
             bw.close();
             int responseCode = connection.getResponseCode();
             Log.d(TAG,String.valueOf(responseCode).toString());
+            if(responseCode == 204){
+                return true;
+            }
         }catch (Exception ex){
             Log.d(TAG,ex.toString());
         }
+        return false;
     }
 
 

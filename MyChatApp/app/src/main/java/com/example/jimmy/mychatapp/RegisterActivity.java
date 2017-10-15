@@ -193,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
             }
             if(postResult != null){
                 new AlertDialog.Builder(this)
-                        .setMessage("建立帳號成功，將返回登入畫面")
+                        .setMessage("建立帳號 " + postResult + " 成功，將返回登入畫面")
                         .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

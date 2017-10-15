@@ -30,15 +30,15 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Override
     @Consumes({"application/json"})
     public void create(Users entity) {
-        try
-        {
             super.create(entity);    
-        }
-        catch(Exception ex)
-        {
-            System.out.println( "ex :" + ex.toString() ); 
-        }
     }
+    
+//    @POST
+//    @Override
+//    @Consumes({"application/json"})
+//    public void create(Users entity){
+//        em.createNamedQuery("Users.createUser").setParameter("userEmail", entity.getUserEmail()).setParameter("userPw",entity.getUserPw()).setParameter("userName",entity.getUserName()).executeUpdate();
+//    }
 
     @PUT
     @Path("{id}")
