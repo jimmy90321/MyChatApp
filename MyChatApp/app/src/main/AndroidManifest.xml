@@ -23,7 +23,10 @@
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".chatroom.ChatActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:exported="true"/>
     </application>
 
 </manifest>

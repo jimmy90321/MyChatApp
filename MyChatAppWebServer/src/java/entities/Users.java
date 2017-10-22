@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByCreatedAt", query = "SELECT u FROM Users u WHERE u.createdAt = :createdAt")})
 //    , @NamedQuery(name = "Users.createUser", query = "INSERT INTO Users u (u.userEmail, u.userPw, u.userName) VALUES ( :userEmail, :userPw, :userName)")})
 public class Users implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
