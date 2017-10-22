@@ -1,5 +1,6 @@
 package entities.service;
 
+import apiMessage.ApiResult;
 import entities.Users;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -57,13 +58,36 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     public void remove(@PathParam("id") Integer id) {
         super.remove(super.find(id));
     }
-
+    
     @GET
     @Path("{email}")
     @Produces({"application/json"})
     public Users find(@PathParam("email") String useremail) {
           return (Users) em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", useremail).getSingleResult();
     }
+
+    //http://localhost:11241/MyChatAppWebServer/webresources/entities.users/Test/4567
+    @GET
+    @Path("/Test/{email}")
+    @Produces({"application/json"})
+    public ApiResult GetMail(@PathParam("email") String useremail) {
+        ApiResult apiResult = new ApiResult();
+        try
+        {
+            Users users = (Users) em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", useremail).getSingleResult();
+            apiResult.setErrCode(0);
+            apiResult.setData(users);
+            return apiResult;
+        }
+        catch(Exception ex)
+        {
+            apiResult.setErrCode(500);
+            apiResult.setErrMsg(ex.toString());
+            return apiResult;
+        }
+    }
+
+    
     
 //    @Path("{id}")
 //    @Produces({"application/json"})
