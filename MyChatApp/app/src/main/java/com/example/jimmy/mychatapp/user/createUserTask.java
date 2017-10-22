@@ -6,7 +6,8 @@ import android.util.Log;
 import com.example.jimmy.mychatapp.common.User;
 import com.google.gson.Gson;
 
-import java.io.OutputStream;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -35,14 +36,16 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
         String jsonOut = new Gson().toJson(user);
         String jsonIn = null;
         try{
-            createUser(url,jsonOut);
+            if(createUser(url,jsonOut)){
+                jsonIn = params[0].toString();
+            }
         }catch (Exception ex){
             Log.d(TAG,ex.toString());
         }
         return jsonIn;
     }
 
-    private void createUser(String url, String jsonOut) {
+    private boolean createUser(String url, String jsonOut) {
         try{
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestProperty("Content-type", "Application/json");
@@ -51,14 +54,21 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
 
-            OutputStream bw = connection.getOutputStream();
-            bw.write(jsonOut.getBytes());
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+// OutputStream bw = connection.getOutputStream();
+//            bw.write(jsonOut.getBytes());
+            bw.write(jsonOut);
+            bw.flush();
             bw.close();
             int responseCode = connection.getResponseCode();
             Log.d(TAG,String.valueOf(responseCode).toString());
+            if(responseCode == 204){
+                return true;
+            }
         }catch (Exception ex){
             Log.d(TAG,ex.toString());
         }
+        return false;
     }
 
 

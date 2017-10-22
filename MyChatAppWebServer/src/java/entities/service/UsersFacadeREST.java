@@ -30,15 +30,15 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Override
     @Consumes({"application/json"})
     public void create(Users entity) {
-        try
-        {
             super.create(entity);    
-        }
-        catch(Exception ex)
-        {
-            System.out.println( "ex :" + ex.toString() ); 
-        }
     }
+    
+//    @POST
+//    @Override
+//    @Consumes({"application/json"})
+//    public void create(Users entity){
+//        em.createNamedQuery("Users.createUser").setParameter("userEmail", entity.getUserEmail()).setParameter("userPw",entity.getUserPw()).setParameter("userName",entity.getUserName()).executeUpdate();
+//    }
 
     @PUT
     @Path("{id}")
@@ -58,13 +58,14 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Produces({"application/json"})
     public Users find(@PathParam("email") String useremail) {
           return (Users) em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", useremail).getSingleResult();
+    }
     
 //    @Path("{id}")
 //    @Produces({"application/json"})
 //    public Users find(@PathParam("id") Integer id) {
 //          return (Users) em.createNamedQuery("Users.findByUserName").setParameter("userName", "test").getSingleResult();      
 // return super.find(userName);
-    }
+//    }
 
     @GET
     @Override
