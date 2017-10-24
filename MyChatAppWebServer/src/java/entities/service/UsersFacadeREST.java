@@ -1,6 +1,7 @@
 package entities.service;
 
 import apiMessage.ApiResult;
+import com.google.gson.Gson;
 import entities.Users;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -33,9 +34,7 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Override
     @Consumes({"application/json"})
     public void create(Users entity) {
-        if(true){
-            throw new WebApplicationException(Response.Status.NOT_ACCEPTABLE);
-        }
+        //if(user is exist)
             super.create(entity);    
     }
     
@@ -76,7 +75,9 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
         {
             Users users = (Users) em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", useremail).getSingleResult();
             apiResult.setErrCode(0);
-            apiResult.setData(users);
+            Gson gson = new Gson();
+            String jsonIn = gson.toJson(users);
+            apiResult.setData(jsonIn);
             return apiResult;
         }
         catch(Exception ex)

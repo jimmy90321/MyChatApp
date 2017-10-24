@@ -39,13 +39,14 @@ public class ApiResult implements Serializable {
     public void setErrMsg(String ErrMsg) {
         this._ErrMsg = ErrMsg;
     }
-    private Object _data;
-    public Object getData() {
+    private String _data;
+
+    public String getData() {
         return _data;
     }
-    
-    public void setData(Object data) {
-        this._data = data;
+
+    public void setData(String _data) {
+        this._data = _data;
     }
     
     
