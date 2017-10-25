@@ -29,21 +29,26 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     public UsersFacadeREST() {
         super(Users.class);
     }
-
-    @POST
-    @Override
-    @Consumes({"application/json"})
-    public void create(Users entity) {
-        //if(user is exist)
-            super.create(entity);    
-    }
     
-//    @POST
-//    @Override
-//    @Consumes({"application/json"})
-//    public void create(Users entity){
-//        em.createNamedQuery("Users.createUser").setParameter("userEmail", entity.getUserEmail()).setParameter("userPw",entity.getUserPw()).setParameter("userName",entity.getUserName()).executeUpdate();
-//    }
+    @POST
+    @Consumes({"application/json"})
+    public ApiResult apiCreate(Users entity){
+        ApiResult apiResult = new ApiResult();
+        //check if user is exist
+        String email = entity.getUserEmail();
+        try{
+            em.createNamedQuery("Users.findByUserEmail").setParameter("userEmail", email).getSingleResult();
+            apiResult.setErrCode(1001);
+            apiResult.setErrMsg("該帳戶已存在");
+        }catch(Exception ex){
+            apiResult.setErrCode(0);
+            Gson gson = new Gson();
+            String jsonIn = gson.toJson(entity);
+            apiResult.setData(jsonIn);
+            super.create(entity);
+        }
+        return apiResult;
+    }
 
     @PUT
     @Path("{id}")
