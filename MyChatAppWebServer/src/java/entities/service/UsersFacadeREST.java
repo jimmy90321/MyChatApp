@@ -4,6 +4,8 @@ import apiMessage.ApiResult;
 import com.google.gson.Gson;
 import entities.Users;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,6 +36,26 @@ public class UsersFacadeREST extends AbstractFacade<Users> {
     @Consumes({"application/json"})
     public ApiResult apiCreate(Users entity){
         ApiResult apiResult = new ApiResult();
+        String email_regex = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
+        String userEmail = entity.getUserEmail().toString();
+        Pattern pattern = Pattern.compile(email_regex);
+        Matcher matcher = pattern.matcher(userEmail);
+        //check userEmail
+        if(userEmail == null || userEmail.equals("")){
+            apiResult.setErrCode(1011);
+            apiResult.setErrMsg("帳戶名稱不可為空白");
+            return apiResult;
+        }else if(!matcher.matches()){
+            apiResult.setErrCode(1012);
+            apiResult.setErrMsg("帳戶名稱無效(格式錯誤)");
+            return apiResult;
+        }
+        //check userPass
+        else if (entity.getUserPw().trim().length() < 4 || entity.getUserPw().trim().length() > 12) {
+            apiResult.setErrCode(1013);
+            apiResult.setErrMsg("密碼長度未依規定，請重新輸入密碼(4~12碼)");
+            return apiResult;
+        }
         //check if user is exist
         String email = entity.getUserEmail();
         try{

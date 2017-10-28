@@ -163,10 +163,10 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
     };
 
     public void Register(View view) {
-        String mEmail = et_email.getText().toString();
-        String mPass = et_pass.getText().toString();
-        String mPassConfirm = et_passcofirm.getText().toString();
-        String mName = et_name.getText().toString();
+        String mEmail = et_email.getText().toString().trim();
+        String mPass = et_pass.getText().toString().trim();
+        String mPassConfirm = et_passcofirm.getText().toString().trim();
+        String mName = et_name.getText().toString().trim();
         if(mEmail.length() == 0){
             new AlertDialog.Builder(this)
                     .setMessage("請輸入Email")
@@ -174,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity implements DialogInterfa
                     .show();
         }else if(mPass.length() < 4 || mPass.length() > 12){
             new AlertDialog.Builder(this)
-                    .setMessage("請輸入密碼")
+                    .setMessage("請輸入4~12碼的密碼")
                     .setPositiveButton("確定",this)
                     .show();
         }else if(!mPassConfirm.equals(mPass)){
