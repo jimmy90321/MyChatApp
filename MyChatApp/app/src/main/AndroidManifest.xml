@@ -24,9 +24,13 @@
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".chatroom.ChatActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:exported="true"/>
+        <activity
+            android:name=".chatroom.MessageListActivity_unfinished"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".chatroom.MessageTestActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

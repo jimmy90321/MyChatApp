@@ -48,8 +48,8 @@ public class ChatRooms implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatRoomId")
-    private Collection<Messages> messagesCollection;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "chatRoomId")
+    //private Collection<Messages> messagesCollection;
 
     public ChatRooms() {
     }
@@ -88,14 +88,14 @@ public class ChatRooms implements Serializable {
         this.createdAt = createdAt;
     }
 
-    @XmlTransient
-    public Collection<Messages> getMessagesCollection() {
-        return messagesCollection;
-    }
-
-    public void setMessagesCollection(Collection<Messages> messagesCollection) {
-        this.messagesCollection = messagesCollection;
-    }
+//    @XmlTransient
+//    public Collection<Messages> getMessagesCollection() {
+//        return messagesCollection;
+//    }
+//
+//    public void setMessagesCollection(Collection<Messages> messagesCollection) {
+//        this.messagesCollection = messagesCollection;
+//    }
 
     @Override
     public int hashCode() {

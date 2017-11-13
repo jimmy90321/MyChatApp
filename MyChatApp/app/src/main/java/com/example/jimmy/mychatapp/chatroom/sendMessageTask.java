@@ -1,9 +1,10 @@
-package com.example.jimmy.mychatapp.user;
+package com.example.jimmy.mychatapp.chatroom;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.jimmy.mychatapp.common.User;
+import com.example.jimmy.mychatapp.common.Message;
+import com.example.jimmy.mychatapp.message.message_main;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -15,28 +16,26 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by jimmy on 2017/10/1.
+ * Created by jimmy on 2017/11/12.
  */
 
-public class createUserTask extends AsyncTask<Object,Integer,String>{
+public class sendMessageTask extends AsyncTask<Object,Integer,String> {
 
-    private static final String TAG = "createUserTask";
+    private static final String TAG = "sendMessageTask";
 
     @Override
     protected String doInBackground(Object... params) {
-        String url = user_main.url;
-        User user = new User();
-        user.setUserEmail(params[0].toString());
-        user.setUserPw(params[1].toString());
-        user.setUserName(params[2].toString());
+        String url = message_main.url;
+        Message message = new Message();
+        message.setMessage(params[0].toString());
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
         Timestamp current = new Timestamp(now.getTime());
-        user.setCreatedAt(current);
-        String jsonOut = new Gson().toJson(user);
+        message.setCreatedAt(current);
+        String jsonOut = new Gson().toJson(message);
         String jsonIn = null;
         try{
-            if(createUser(url,jsonOut)){
+            if(createMessage(url,jsonOut)){
                 jsonIn = params[0].toString();
             }
         }catch (Exception ex){
@@ -45,7 +44,7 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
         return jsonIn;
     }
 
-    private boolean createUser(String url, String jsonOut) {
+    private boolean createMessage(String url, String jsonOut) {
         try{
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestProperty("Content-type", "Application/json");
@@ -68,6 +67,4 @@ public class createUserTask extends AsyncTask<Object,Integer,String>{
         }
         return false;
     }
-
-
 }

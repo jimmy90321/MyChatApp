@@ -1,6 +1,7 @@
 
 package entities.service;
 
+import apiMessage.ApiResult;
 import entities.Messages;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -28,10 +29,17 @@ public class MessagesFacadeREST extends AbstractFacade<Messages> {
     }
 
     @POST
-    @Override
     @Consumes({"application/json"})
-    public void create(Messages entity) {
-        super.create(entity);
+    public ApiResult apiCreate(Messages entity) {
+        ApiResult apiResult = new ApiResult();
+        try{
+            super.create(entity);
+        }
+        catch(Exception ex){
+            apiResult.setErrCode(400);
+            apiResult.setData(ex.toString());
+        }
+        return apiResult;
     }
 
     @PUT

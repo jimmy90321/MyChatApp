@@ -31,26 +31,21 @@ public class Messages implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "message_id")
     private Integer messageId;
     @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "message")
     private String message;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @JoinColumn(name = "chat_room_id", referencedColumnName = "chat_room_id")
-    @ManyToOne(optional = false)
-    private ChatRooms chatRoomId;
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false)
-    private Users userId;
+//    @JoinColumn(name = "chat_room_id", referencedColumnName = "chat_room_id")
+//    @ManyToOne(optional = false)
+  //  private ChatRooms chatRoomId;
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+//    @ManyToOne(optional = false)
+  //  private Users userId;
 
     public Messages() {
     }
@@ -89,21 +84,21 @@ public class Messages implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public ChatRooms getChatRoomId() {
-        return chatRoomId;
-    }
-
-    public void setChatRoomId(ChatRooms chatRoomId) {
-        this.chatRoomId = chatRoomId;
-    }
-
-    public Users getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Users userId) {
-        this.userId = userId;
-    }
+//    public ChatRooms getChatRoomId() {
+//        return chatRoomId;
+//    }
+//
+//    public void setChatRoomId(ChatRooms chatRoomId) {
+//        this.chatRoomId = chatRoomId;
+//    }
+//
+//    public Users getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Users userId) {
+//        this.userId = userId;
+//    }
 
     @Override
     public int hashCode() {
